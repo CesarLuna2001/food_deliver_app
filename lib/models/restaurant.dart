@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:food_deliver_app/models/food.dart';
 
-class Restaurant {
+class Restaurant with ChangeNotifier {
 
   //List of food menu
   final List<Food> _menu = [
@@ -132,7 +133,7 @@ class Restaurant {
     Food(
       name: "French Fries", 
       description: "Crispy French fries with a side of ketchup",
-      imagePath: "lib/images/SIDE3.png", 
+      imagePath: "lib/images/SIDE3.jpg", 
       price: 1.99, 
       category: FoodCategory.sides,
       availableAddons: [
@@ -144,7 +145,7 @@ class Restaurant {
     Food(
       name: "baked potato",
       description: "Baked potato with sour cream and chives",
-      imagePath: "lib/images/SIDE1.png",
+      imagePath: "lib/images/SIDE1.jpg",
       price: 2.49,
       category: FoodCategory.sides,
       availableAddons: [
@@ -156,7 +157,7 @@ class Restaurant {
     Food(
       name: "Coleslaw",
       description: "Creamy coleslaw with cabbage and carrots",
-      imagePath: "lib/images/SIDE2.png",
+      imagePath: "lib/images/SIDE2.jpg",
       price: 2.29,
       category: FoodCategory.sides,
       availableAddons: [
@@ -168,7 +169,7 @@ class Restaurant {
     Food(
       name: "Bread",
       description: "Freshly baked bread with butter",
-      imagePath: "lib/images/SIDE4.png",
+      imagePath: "lib/images/SIDE4.jpg",
       price: 2.99,
       category: FoodCategory.sides,
       availableAddons: [
@@ -180,7 +181,7 @@ class Restaurant {
     Food(
       name: "Mac and Cheese",
       description: "Creamy mac and cheese with cheddar cheese",
-      imagePath: "lib/images/SIDE5.png",
+      imagePath: "lib/images/SIDE5.jpg",
       price: 1.99,
       category: FoodCategory.sides,
       availableAddons: [
@@ -194,7 +195,7 @@ class Restaurant {
     Food(
       name: "Chocolate Cake",
       description: "Rich chocolate cake with chocolate frosting",
-      imagePath: "lib/images/DES5.png",
+      imagePath: "lib/images/DES5.jpg",
       price: 2.99,
       category: FoodCategory.desserts,
       availableAddons: [
@@ -206,7 +207,7 @@ class Restaurant {
     Food(
       name: "Cheesecake",
       description: "Creamy cheesecake with a graham cracker crust",
-      imagePath: "lib/images/DES2.png",
+      imagePath: "lib/images/DES2.jpg",
       price: 2.49,
       category: FoodCategory.desserts,
       availableAddons: [
@@ -218,7 +219,7 @@ class Restaurant {
     Food(
       name: "Ice Cream",
       description: "Chocomint ice cream with chocolate syrup and nuts",
-      imagePath: "lib/images/DES1.png",
+      imagePath: "lib/images/DES1.jpg",
       price: 2.19,
       category: FoodCategory.desserts,
       availableAddons: [
@@ -230,7 +231,7 @@ class Restaurant {
     Food(
       name: "Brownie",
       description: "Fudgy brownie with chocolate chips",
-      imagePath: "lib/images/DES3.png",
+      imagePath: "lib/images/DES3.jpg",
       price: 2.29,
       category: FoodCategory.desserts,
       availableAddons: [
@@ -242,7 +243,7 @@ class Restaurant {
     Food(
       name: "Pays de Fruits",
       description: "Fruit tart with a buttery crust and fresh fruit",
-      imagePath: "lib/images/DES4.png",
+      imagePath: "lib/images/DES4.jpg",
       price: 1.99,
       category: FoodCategory.desserts,
       availableAddons: [
@@ -256,7 +257,7 @@ class Restaurant {
     Food(
       name: "Soda",
       description: "Refreshing soda in a variety of flavors",
-      imagePath: "lib/images/DRI5.png",
+      imagePath: "lib/images/DRI5.jpg",
       price: 1.99,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -268,7 +269,7 @@ class Restaurant {
     Food(
       name: "Tea",
       description: "Tea with lemon and mint",
-      imagePath: "lib/images/DRI4.png",
+      imagePath: "lib/images/DRI4.jpg",
       price: 2.49,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -280,7 +281,7 @@ class Restaurant {
     Food(
       name: "Coffee",
       description: "Freshly brewed coffee with cream and sugar",
-      imagePath: "lib/images/DRI3.png",
+      imagePath: "lib/images/DRI3.jpg",
       price: 2.19,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -292,7 +293,7 @@ class Restaurant {
     Food(
       name: "Juice",
       description: "Freshly squeezed juice in a variety of flavors",
-      imagePath: "lib/images/DRI2.png",
+      imagePath: "lib/images/DRI2.jpg",
       price: 2.29,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -314,4 +315,40 @@ class Restaurant {
       ]
     ),
   ];	
+
+  /*
+
+  G E T T E R S
+
+  */
+
+  List<Food> get menu => _menu;
+
+  /* 
+
+  O P E R A T I O N S
+
+  */
+
+  //add to cart 
+
+  //remove from cart
+
+  //get total price of cart
+
+  //get total items in cart
+
+  //clear cart
+
+  /* 
+
+  H E L P E R S
+
+  */
+
+  //generate a recipt 
+
+  //format double value late money
+  
+  //format list of addons into a string summary   
 }
