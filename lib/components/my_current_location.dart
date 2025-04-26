@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:food_deliver_app/models/restaurant.dart';
+import 'package:provider/provider.dart';
 
 class MyCurrentLocation extends StatelessWidget {
-  const MyCurrentLocation({super.key});
+  MyCurrentLocation({super.key});
+
+  final TextEditingController textController = TextEditingController();
 
   void openLocationSearchBox(BuildContext context) {
     showDialog(
       context: context, 
       builder: (context) => AlertDialog(
         title: const Text("Your Location"),
-        content: const TextField(
-          decoration: InputDecoration(hintText: "Search Address..."),
+        content: TextField(
+          controller: textController,
+          decoration: InputDecoration(hintText: "Enter Address..."),
         ),
         actions: [
           //Cancel Button
           MaterialButton(
-            onPressed: () => Navigator.pop(context), 
+            onPressed: () {
+              Navigator.pop(context);
+              textController.clear();
+            }, 
             child: const Text("Cancel"),
           ),
 
           //Save Button 
           MaterialButton(
-            onPressed: () => Navigator.pop(context), 
+            onPressed: () {
+              //update delivery adress
+              String newAddress = textController.text;
+              context.read<Restaurant>().updateDeliveryAddress(newAddress);
+              Navigator.pop(context);
+              textController.clear();
+            },
             child: const Text("Save"),
           )
         ],
@@ -45,10 +59,13 @@ class MyCurrentLocation extends StatelessWidget {
             child: Row(
               children: [
                 //Address
-                Text("117a Mercedes Barrera",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold
+                Consumer<Restaurant>(
+                  builder: (context, restaurant, child) => Text(
+                    restaurant.deliveryAdress,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ),
                   

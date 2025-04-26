@@ -32,13 +32,13 @@ class _FoodPageState extends State<FoodPage> {
     //format the selected addonns 
     List<Addon> currentlySelectedAddons = [];
     for (Addon addon in widget.food.availableAddons) {
-      if (selectedAddons[addon] == true) {
+      if (widget.selectedAddons[addon] == true) {
         currentlySelectedAddons.add(addon);
       }
     }
 
     //add food to cart
-    context.read()<Restaurant>().addToCart(food, currentlySelectedAddons);
+    context.read<Restaurant>().addToCart(food, currentlySelectedAddons);
   }
 
   @override

@@ -45,30 +45,29 @@ class MyCartTile extends StatelessWidget {
                       Text(cartItem.food.name),
               
                       //Food Price
-                      Text('${cartItem.food.price}', 
+                      Text("\$${cartItem.food.price}", 
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
+
+                      const SizedBox(height: 10),
+
+                      //Increment o Decrement quantity
+                      QuantitySelector(
+                        quantity: cartItem.quantity, 
+                        food: cartItem.food, 
+                        onDecrement: () {
+                          //Decrement quantity
+                          restaurant.removeFromCart(cartItem);
+                        }, 
+                        onIncrement:(){
+                          //Increment quantity
+                          restaurant.addToCart(cartItem.food, cartItem.selectedAddons);
+                        }
+                      )
                     ]
                   ),
-
-                  const Spacer(),
-              
-                  //Increment o Decrement quantity
-                  QuantitySelector(
-                    quantity: cartItem.quantity, 
-                    food: cartItem.food, 
-                    onDecrement: () {
-                      //Decrement quantity
-                      restaurant.removeFromCart(cartItem);
-                    }, 
-                    onIncrement:(){
-                      //Increment quantity
-                      restaurant.addToCart(cartItem.food, cartItem.selectedAddons);
-                    }
-              
-                  )
                 ],
               ),
             ),
@@ -89,9 +88,9 @@ class MyCartTile extends StatelessWidget {
                           Text(addon.name),
                     
                           //Adon Price
-                          Text('${addon.price}'),
+                          Text(' \$(${addon.price})'),
                         ],
-                      ), 
+                      ),  
                       shape: StadiumBorder(
                         side: BorderSide(
                           color: Theme.of(context).colorScheme.primary,

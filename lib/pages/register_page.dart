@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_deliver_app/components/my_button.dart';
 import 'package:food_deliver_app/components/my_textfield.dart';
+import 'package:food_deliver_app/services/auth/auth_services.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -12,9 +13,46 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  //Text editing controllers
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  //register method
+  void register() async {
+    //get auth service
+    final _authService = AuthServices();
+
+    //check if passwords match -> create user
+    if(passwordController.text == confirmPasswordController.text) {
+      //Try creating user
+      try {
+        await _authService.signUpWithEmailPassword(
+          emailController.text, 
+          passwordController.text
+        );
+      }
+      //display any errors
+      catch (e) {
+        showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          )
+        );
+      }
+    }
+
+    //if passwword don't match -> show error 
+    else {
+      showDialog(
+          context: context, 
+          builder: (context) => const AlertDialog(
+            title: Text("Passwords do not match"),
+          )
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

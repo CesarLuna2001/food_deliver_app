@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 ),
 
                 //My current location
-                const MyCurrentLocation(),
+                MyCurrentLocation(),
 
                 //description Box
                 const MyDescriptionBox(),

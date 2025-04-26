@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_deliver_app/components/my_button.dart';
 import 'package:food_deliver_app/components/my_textfield.dart';
-import 'package:food_deliver_app/pages/home_page.dart';
+import 'package:food_deliver_app/services/auth/auth_services.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -15,16 +15,40 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   //text editing controllers
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   //login method
-  void login() {
-    
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => const HomePage(),
-      ),
+  void login() async {
+    //get instance of auth service
+    final _authService = AuthServices();
+
+    //try to sign in 
+    try {
+      await _authService.signInWithEmailPassword(
+        emailController.text, 
+        passwordController.text
+      );
+    }
+
+    //display any errors
+    catch (e) {
+      showDialog(
+        context: context, 
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        )
+      );
+    }
+  }
+
+  void forgotPw() {
+    showDialog(
+      context: context, 
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        title: const Text("Usser tapped forgot password"),
+      )
     );
   }
   
@@ -75,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
           //Sign In Button
           MyButton(
             text: "Sign In", 
-            onTap: () {}
+            onTap: login
           ),
 
           const SizedBox(height: 25),
