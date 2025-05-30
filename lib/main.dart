@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_deliver_app/firebase_options.dart';
 import 'package:food_deliver_app/models/restaurant.dart';
-import 'package:food_deliver_app/pages/home_page.dart';
+import 'package:food_deliver_app/services/auth/auth_gate.dart';
 import 'package:food_deliver_app/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(), 
+      home: const AuthGate(), 
       theme: Provider.of<ThemeProvider>(context).themeData, // Use the theme from ThemeProvider
     );   
   }

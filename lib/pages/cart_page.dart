@@ -5,38 +5,37 @@ import 'package:food_deliver_app/models/restaurant.dart';
 import 'package:food_deliver_app/pages/payment_page.dart';
 import 'package:provider/provider.dart';
 
+// Pantalla que muestra el carrito de compras usando el estado de Restaurant
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Restaurant>(
+    return Consumer<Restaurant>(  // Escucha cambios en el modelo Restaurant
       builder: (context, restaurant, child) {
-        //cart
-        final userCart = restaurant.cart;
+        final userCart = restaurant.cart;  // Obtiene los items en el carrito
 
-        //Scaffold UI
         return Scaffold(
           appBar: AppBar(
-            title: const Text("Cart"),
-            backgroundColor: Colors.transparent,
-            foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: const Text("Cart"),  // Título de la app bar
+            backgroundColor: Colors.transparent,  // Fondo transparente
+            foregroundColor: Theme.of(context).colorScheme.inversePrimary,  // Color del texto/iconos
             actions: [
-              //Clear cart button
+              // Botón para limpiar el carrito
               IconButton(
                 onPressed: () {
+                  // Muestra un diálogo para confirmar vaciar carrito
                   showDialog(
-                    context: context, 
+                    context: context,
                     builder: (context) => AlertDialog(
                       title: const Text("Are you sure you want to clear the cart?"),
                       actions: [
-                        //Cancel Button
+                        // Botón cancelar: cierra el diálogo
                         TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: const Text("Cancel")
                         ),
-
-                        //Yes Button
+                        // Botón sí: limpia el carrito y cierra diálogo
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context);
@@ -48,31 +47,30 @@ class CartPage extends StatelessWidget {
                     )
                   );
                 },
-                icon: Icon(Icons.delete),
+                icon: Icon(Icons.delete),  // Ícono de papelera
               )
             ],
           ),
           body: Column(
             children: [
-
-              //List of cart 
+              // Lista de items en el carrito
               Expanded(
                 child: Column(
                   children: [
+                    // Si el carrito está vacío muestra mensaje centrado
                     userCart.isEmpty 
                     ? const Expanded(
                       child: Center(
                         child: Text("Cart is empty...")
                       )
                     ) 
+                    // Si hay items muestra lista scrollable con tiles de cada item
                     : Expanded(
                       child: ListView.builder(
                         itemCount: userCart.length,
                         itemBuilder: (context, index) {
-                          //get individual cart item 
-                          final cartItem = userCart[index];
-                          //return cart tile UI
-                          return MyCartTile(cartItem: cartItem);
+                          final cartItem = userCart[index];  // Item actual
+                          return MyCartTile(cartItem: cartItem);  // Tile personalizado
                         },
                       ),
                     ),
@@ -80,23 +78,22 @@ class CartPage extends StatelessWidget {
                 ),
               ),
 
-              //My button to pay 
+              // Botón para ir a página de pago
               MyButton(
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                  builder: (context) => const PaymentPage()
+                    builder: (context) => const PaymentPage()
                   )
                 ), 
                 text: "Go to checkout",
               ),
 
-              const SizedBox(height: 25),
-
+              const SizedBox(height: 25),  // Espacio inferior
             ],
           ), 
         );
       }
     );
   }
-} 
+}

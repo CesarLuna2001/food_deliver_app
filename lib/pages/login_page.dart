@@ -4,8 +4,8 @@ import 'package:food_deliver_app/components/my_textfield.dart';
 import 'package:food_deliver_app/services/auth/auth_services.dart';
 
 class LoginPage extends StatefulWidget {
+  // Callback que se ejecuta cuando el usuario toca "Register now"
   final void Function()? onTap;
-
 
   const LoginPage({super.key, required this.onTap});
 
@@ -14,25 +14,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //text editing controllers
+  // Controladores para obtener texto de los campos Email y Password
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  //login method
+  // Método para iniciar sesión
   void login() async {
-    //get instance of auth service
+    // Instancia del servicio de autenticación
     final _authService = AuthServices();
 
-    //try to sign in 
     try {
+      // Intenta iniciar sesión con email y contraseña
       await _authService.signInWithEmailPassword(
         emailController.text, 
         passwordController.text
       );
     }
-
-    //display any errors
     catch (e) {
+      // En caso de error, muestra un diálogo con el mensaje
       showDialog(
         context: context, 
         builder: (context) => AlertDialog(
@@ -42,12 +41,13 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  // Método para cuando el usuario olvida su contraseña
   void forgotPw() {
     showDialog(
       context: context, 
       builder: (context) => AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.background,
-        title: const Text("Usser tapped forgot password"),
+        title: const Text("User tapped forgot password"),
       )
     );
   }
@@ -55,19 +55,20 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Fondo de la página con color del tema
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         children: [
-          //Logo
+          // Icono del logo
           Icon(
             Icons.lock_open, 
             size: 100, 
             color: Theme.of(context).colorScheme.inversePrimary,
-            ),
+          ),
 
-            const SizedBox(height: 25),
+          const SizedBox(height: 25),
 
-          //Message
+          // Texto descriptivo o nombre de la app
           Text(
             "Food Delivery App", 
             style: TextStyle(
@@ -78,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
 
           const SizedBox(height: 25),
 
-          //Email TextField
+          // Campo para ingresar Email
           MyTextField(
             controller: emailController, 
             hintText: "Email", 
@@ -87,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
 
           const SizedBox(height: 10),
 
-          //Password TextField
+          // Campo para ingresar Password (oculto)
           MyTextField(
             controller: passwordController, 
             hintText: "Password", 
@@ -96,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
 
           const SizedBox(height: 10),
 
-          //Sign In Button
+          // Botón para iniciar sesión, ejecuta la función login()
           MyButton(
             text: "Sign In", 
             onTap: login
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
 
           const SizedBox(height: 25),
 
-          //not member? register now
+          // Texto para invitar a registrarse si no es miembro
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -115,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(width: 4),
+              // Texto "Register now" que se puede tocar para ejecutar el callback onTap
               GestureDetector(
                 onTap: widget.onTap,
                 child: Text(

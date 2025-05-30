@@ -18,39 +18,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  //Tab Controller
+  // Controlador para manejar las pestañas (tabs)
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+    // Inicializa el controlador de tabs con la cantidad de categorías de comida
     _tabController = TabController(length: FoodCategory.values.length, vsync: this);
   }
 
   @override
   void dispose() {
+    // Libera el controlador cuando el widget se destruya para evitar fugas de memoria
     _tabController.dispose();
     super.dispose();
   }
 
+  // Método privado para filtrar la lista completa de alimentos según la categoría dada
   List<Food> _filterMenuByCategory(FoodCategory category, List<Food> fullMenu) {
     return fullMenu.where((food) => food.category == category).toList();
   }
 
-  //return list of foods in given category
+  // Genera una lista de widgets que muestra la comida agrupada por categoría
   List<Widget> getFoodInThisCategory(List<Food> fullMenu){
     return FoodCategory.values.map((category) {
-      //get caregory menu 
+      // Filtra el menú para obtener solo los alimentos de la categoría actual
       List<Food> categoryMenu = _filterMenuByCategory(category, fullMenu);
+
+      // Construye una lista de elementos para esa categoría
       return ListView.builder(
         itemCount: categoryMenu.length,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(), // Previene el scroll independiente dentro del TabBarView
         padding: EdgeInsets.zero,
         itemBuilder: (context, index){
-          //get individual food 
+          // Obtiene un alimento individual
           final food = categoryMenu[index];
 
-          //return food tile UI
+          // Devuelve el widget de cada alimento con la funcionalidad para ir a la página de detalles
           return FoodTile(
             food: food, 
             onTap: () => Navigator.push(
@@ -62,17 +67,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           );
         },
       );
-    },).toList();
+    }).toList();
   } 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
+      drawer: MyDrawer(), // Menú lateral deslizable
       body: NestedScrollView(
+        // Construcción del SliverAppBar con un header flexible
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           MySliverAppBar(
-            title: MyTabBar(tabController: _tabController),
+            title: MyTabBar(tabController: _tabController), // Pestañas para categorías
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -82,18 +88,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   color: Theme.of(context).colorScheme.secondary,
                 ),
 
-                //My current location
+                // Widget personalizado para mostrar la ubicación actual
                 MyCurrentLocation(),
 
-                //description Box
+                // Widget con la descripción o detalles adicionales
                 const MyDescriptionBox(),
               ],
             ),
           ),
         ],
+        // El cuerpo que cambia según la pestaña seleccionada, escuchando al proveedor Restaurant
         body: Consumer<Restaurant>(
           builder: (context, restaurant, child) => TabBarView(
             controller: _tabController,
+            // Para cada tab, muestra la lista de comidas filtradas según la categoría
             children: getFoodInThisCategory(restaurant.menu),
           ),
         )

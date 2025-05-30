@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_deliver_app/components/my_receipt.dart';
 import 'package:food_deliver_app/models/restaurant.dart';
-
+import 'package:food_deliver_app/services/database/firestore.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryProgressPage extends StatefulWidget {
   const DeliveryProgressPage({super.key});
@@ -12,14 +13,14 @@ class DeliveryProgressPage extends StatefulWidget {
 
 class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
 
-  //get acces to the database 
-  FirestoreSevice db = FirestoreSevice();
+  // Instancia para acceder al servicio de base de datos Firestore
+  FirestoreService db = FirestoreService();
 
   @override
   void initState() {
     super.initState();
 
-    //if we get to this page, submit order to firestore db
+    // Al inicializar el estado, obtenemos el recibo del pedido y lo guardamos en la base de datos
     String receipt = context.read<Restaurant>().displayCartReceipt();
     db.saveOrderToDatabase(receipt);
   }
@@ -27,10 +28,15 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Barra superior transparente
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
+
+      // Barra inferior con detalles del conductor y botones
       bottomNavigationBar: _buildBottomNavigationBar(context),
+
+      // Cuerpo principal con widget que muestra el recibo
       body: const Column(
         children: [
           MyReceipt(),
@@ -39,6 +45,7 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
     );
   }
 
+  // Método que construye la barra inferior personalizada
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
       height: 100,
@@ -50,9 +57,11 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
         ),
       ),
       padding: const EdgeInsets.all(25),
-      //profile pic of a driver 
+
+      // Fila principal que contiene la imagen del conductor, detalles y botones
       child: Row(
         children: [
+          // Contenedor para el ícono circular que simula foto de perfil del conductor
           Container(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.background,
@@ -66,7 +75,7 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
 
           const SizedBox(width: 10),
 
-          //Driver details
+          // Columna con nombre y rol del conductor
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -87,9 +96,10 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
 
           const Spacer(),
 
+          // Fila con botones para mensaje y llamada
           Row(
             children: [
-              //Message button
+              // Botón de mensaje con fondo circular
               Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
@@ -104,7 +114,7 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
 
               const SizedBox(width: 10),
 
-              //call button
+              // Botón de llamada con fondo circular y color verde
               Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,

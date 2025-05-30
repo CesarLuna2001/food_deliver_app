@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -33,10 +30,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -65,4 +59,25 @@ class DefaultFirebaseOptions {
     storageBucket: 'fooddelivery-52ab2.firebasestorage.app',
     iosBundleId: 'com.example.foodDeliverApp',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDF-szKP8hdgwqyXaaoYsirqERITXbBYDg',
+    appId: '1:551604259887:web:087af0f04d8c4bfd3a4ada',
+    messagingSenderId: '551604259887',
+    projectId: 'fooddelivery-52ab2',
+    authDomain: 'fooddelivery-52ab2.firebaseapp.com',
+    storageBucket: 'fooddelivery-52ab2.firebasestorage.app',
+    measurementId: 'G-LCX7J5Q90Q',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDF-szKP8hdgwqyXaaoYsirqERITXbBYDg',
+    appId: '1:551604259887:web:5530353f515165a73a4ada',
+    messagingSenderId: '551604259887',
+    projectId: 'fooddelivery-52ab2',
+    authDomain: 'fooddelivery-52ab2.firebaseapp.com',
+    storageBucket: 'fooddelivery-52ab2.firebasestorage.app',
+    measurementId: 'G-R569EZ821D',
+  );
+
 }

@@ -1,65 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:food_deliver_app/models/food.dart';
 
+// Widget redondo con botones + / - para ajustar la cantidad de un producto
 class QuantitySelector extends StatelessWidget {
+  // Cantidad actual
   final int quantity;
-  final Food food; 
+  // Referencia al alimento (p.ej., para lógica adicional si se requiere)
+  final Food food;
+  // Callback al presionar el botón de incrementar
   final VoidCallback onIncrement;
+  // Callback al presionar el botón de decrementar
   final VoidCallback onDecrement;
 
-  const QuantitySelector(
-    {super.key, 
-    required this.quantity, 
-    required this.food, 
-    required this.onIncrement, 
-    required this.onDecrement}
-  );
+  // Constructor
+  const QuantitySelector({
+    super.key,
+    required this.quantity,
+    required this.food,
+    required this.onIncrement,
+    required this.onDecrement,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
-        borderRadius: BorderRadius.circular(50.0),
+        color: Theme.of(context).colorScheme.background, // Fondo según tema
+        borderRadius: BorderRadius.circular(50.0),       // Forma circular
       ),
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),                        // Relleno interno
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,                  // Solo ocupa el espacio necesario
         children: [
-          //Decrease button
+          // Botón para disminuir la cantidad
           GestureDetector(
-            onTap: onDecrement,
+            onTap: onDecrement,                          // Llama al callback de decremento
             child: Icon(
-              Icons.remove,
+              Icons.remove,                              // Ícono “-”
               size: 20,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primary, // Color principal
             ),
           ),
 
-          //quantity count
+          // Texto que muestra la cantidad actual
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.symmetric(horizontal: 8), // Espaciado lateral
             child: SizedBox(
-              width: 20,
+              width: 20,                                 // Ancho fijo
               child: Center(
                 child: Text(
-                  quantity.toString(),
+                  quantity.toString(),                   // Convierte la cantidad a texto
                 ),
               ),
             ),
           ),
 
-          //increase button
+          // Botón para aumentar la cantidad
           GestureDetector(
-            onTap: onIncrement,
+            onTap: onIncrement,                          // Llama al callback de incremento
             child: Icon(
-              Icons.add,
+              Icons.add,                                 // Ícono “+”
               size: 20,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primary, // Color principal
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }
